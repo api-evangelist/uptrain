@@ -1,0 +1,111 @@
+aid: uptrain
+url: https://raw.githubusercontent.com/api-evangelist/uptrain/refs/heads/main/apis.yml
+name: UpTrain
+kind: company
+description: UpTrain is an open-source (Apache-2.0) unified platform to evaluate and
+  improve generative AI and LLM applications. It ships a Python framework plus a managed
+  evaluation API that grades responses against 20+ preconfigured checks - context
+  relevance, factual accuracy, response completeness, hallucination, tonality, prompt
+  injection and more - and performs root cause analysis on failure cases.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- LLM
+- Evaluation
+- LLM Evaluation
+- Observability
+- Open Source
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: uptrain:uptrain-evaluations-api
+  name: UpTrain Evaluations API
+  tags:
+  - Evaluation
+  - LLM
+  - Checks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.uptrain.ai/
+  baseURL: https://demo.uptrain.ai/api/public
+  properties:
+  - url: https://docs.uptrain.ai/getting-started/introduction
+    type: Documentation
+  - url: https://docs.uptrain.ai/predefined-evaluations/overview
+    type: APIReference
+  - url: openapi/uptrain-openapi.yml
+    type: OpenAPI
+  description: Runs evaluations (POST /evaluate) on supplied LLM input/output/context
+    rows against a list of named checks such as context_relevance, factual_accuracy,
+    response_completeness and response_conciseness, returning per-row grades and
+    explanations. Authenticated with an uptrain-access-token header.
+- aid: uptrain:uptrain-log-and-evaluate-api
+  name: UpTrain Log and Evaluate API
+  tags:
+  - Logging
+  - Evaluation
+  - Projects
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.uptrain.ai/
+  baseURL: https://demo.uptrain.ai/api/public
+  properties:
+  - url: https://docs.uptrain.ai/getting-started/quickstart
+    type: Documentation
+  - url: openapi/uptrain-openapi.yml
+    type: OpenAPI
+  description: Logs evaluation data under a named project and evaluates it in one call
+    (POST /log_and_evaluate), persisting results so they appear on the managed UpTrain
+    dashboard with real-time monitoring. The same endpoint backs evaluate_experiments
+    for A/B comparison of prompt or model variants.
+- aid: uptrain:uptrain-root-cause-analysis-api
+  name: UpTrain Root Cause Analysis API
+  tags:
+  - Root Cause Analysis
+  - RAG
+  - Diagnostics
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.uptrain.ai/
+  baseURL: https://demo.uptrain.ai/api/public
+  properties:
+  - url: https://docs.uptrain.ai/predefined-evaluations/overview
+    type: Documentation
+  - url: openapi/uptrain-openapi.yml
+    type: OpenAPI
+  description: Performs root cause analysis (POST /perform_root_cause_analysis) on
+    failing RAG or LLM responses, classifying why a response was poor - e.g. incomplete
+    context, poor retrieval, or hallucination - to guide remediation.
+- aid: uptrain:uptrain-runs-api
+  name: UpTrain Runs and Datasets API
+  tags:
+  - Runs
+  - Datasets
+  - Checksets
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.uptrain.ai/
+  baseURL: https://demo.uptrain.ai/api/public
+  properties:
+  - url: https://docs.uptrain.ai/getting-started/quickstart
+    type: Documentation
+  - url: openapi/uptrain-openapi.yml
+    type: OpenAPI
+  description: Manages evaluation datasets, checksets (reusable bundles of checks),
+    and runs that pair a dataset with a checkset - create a run (POST /run), poll its
+    status (GET /run/{run_id}) and download its results (GET /run/{run_id}/results).
+common:
+- type: GitHubOrganization
+  url: https://github.com/uptrain-ai
+- type: LinkedIn
+  url: https://www.linkedin.com/company/uptrain-ai
+- type: Website
+  url: https://uptrain.ai/
+- type: Documentation
+  url: https://docs.uptrain.ai/
+- type: Plans
+  url: plans/uptrain-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/uptrain-rate-limits.yml
+- type: FinOps
+  url: finops/uptrain-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

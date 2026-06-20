@@ -1,0 +1,83 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: UpTrain
+providerId: uptrain
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- LLM
+- Evaluation
+- LLM Evaluation
+- Open Source
+- Plans
+description: >-
+  UpTrain ships in two forms. The open-source framework is free under the
+  Apache-2.0 license: you self-host it as a Python package (and an optional
+  locally-hosted Docker dashboard), supplying your own LLM provider key for the
+  grading calls. The managed evaluation service (demo.uptrain.ai) runs the
+  evaluations for you with hosted dashboards and requires an UpTrain access
+  token. Public, itemized pricing for the managed tier is not documented;
+  paid / commercial terms are reconciled false until confirmed with UpTrain.
+notes: >-
+  Open-source is free (Apache-2.0). Managed-service pricing is not published on
+  a public pricing page as of this writing and must be confirmed with UpTrain
+  directly. Note also that the project's last significant public release was
+  v0.7.1 (May 2024) and the repository has seen limited public activity since
+  mid-2024; verify current commercial availability before relying on the
+  managed tier.
+sources:
+- https://uptrain.ai/
+- https://github.com/uptrain-ai/uptrain
+- https://docs.uptrain.ai/
+plans:
+- id: uptrain-open-source
+  name: Open Source
+  type: free
+  description: >-
+    Self-hosted Apache-2.0 Python framework plus optional local Docker
+    dashboard. Free to use; you bring your own LLM provider key for grading.
+  entries:
+  - label: Open Source Framework
+    name: open_source
+    type: flat
+    metric: license
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (Apache-2.0); user supplies own LLM provider key
+    userMultiplied: false
+  elements:
+  - name: Python Evaluation Framework
+  - name: 20+ Preconfigured Checks
+  - name: Local Dashboard (Docker, beta)
+  - name: Root Cause Analysis
+- id: uptrain-managed
+  name: Managed Service
+  type: usage
+  description: >-
+    Hosted evaluation API (demo.uptrain.ai) that runs checks server-side with
+    hosted dashboards and real-time monitoring, authenticated by an UpTrain
+    access token. Public itemized pricing is not documented.
+  entries:
+  - label: Managed Evaluations
+    name: managed_evaluations
+    type: usage
+    metric: evaluations
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: not publicly documented - contact UpTrain
+    userMultiplied: false
+  elements:
+  - name: Hosted Evaluate / Log and Evaluate API
+  - name: Hosted Dashboards
+  - name: Projects and Experiments
+  - name: Root Cause Analysis
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

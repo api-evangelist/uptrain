@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "UpTrain Managed Evaluation API",
+    "description": {
+      "content": "Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. Endpoints are rooted at {{baseUrl}}/api/public (default server https://demo.uptrain.ai) and authenticated with the uptrain-access-token header.",
+      "type": "text/plain"
+    },
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "uptrain-access-token" },
+      { "key": "value", "value": "{{uptrainAccessToken}}" },
+      { "key": "in", "value": "header" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://demo.uptrain.ai/api/public" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Validate the UpTrain access token.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth"]
+            },
+            "description": "Checks that the supplied uptrain-access-token is valid."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Evaluation",
+      "item": [
+        {
+          "name": "Run evaluations on a set of LLM responses.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"Paris is the capital of France.\",\n      \"context\": \"France is a country in Europe. Its capital is Paris.\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/evaluate",
+              "host": ["{{baseUrl}}"],
+              "path": ["evaluate"]
+            },
+            "description": "Evaluates each row of input data against the supplied list of checks and returns per-check scores and explanations."
+          },
+          "response": []
+        },
+        {
+          "name": "Log data to a project and evaluate it.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_name\": \"my-rag-project\",\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"Paris is the capital of France.\",\n      \"context\": \"France is a country in Europe. Its capital is Paris.\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\"\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/log_and_evaluate",
+              "host": ["{{baseUrl}}"],
+              "path": ["log_and_evaluate"]
+            },
+            "description": "Logs the data under a named project and evaluates it, persisting results to the UpTrain dashboard. Also backs evaluate_experiments."
+          },
+          "response": []
+        },
+        {
+          "name": "Download evaluation results for a project.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/evaluation_results/{{project_name}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["evaluation_results", "{{project_name}}"]
+            },
+            "description": "Returns all evaluation results logged under the named project."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Root Cause Analysis",
+      "item": [
+        {
+          "name": "Perform root cause analysis on failing responses.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_name\": \"my-rag-project\",\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"I am not sure.\",\n      \"context\": \"France is a country in Europe.\"\n    }\n  ],\n  \"rca_template\": \"rag_with_citation\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/perform_root_cause_analysis",
+              "host": ["{{baseUrl}}"],
+              "path": ["perform_root_cause_analysis"]
+            },
+            "description": "Analyzes failing RAG / LLM responses and classifies why each response was poor."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Runs",
+      "item": [
+        {
+          "name": "Create an evaluation run.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"nightly-eval\",\n  \"dataset\": \"my-dataset\",\n  \"checkset\": \"my-checkset\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/run",
+              "host": ["{{baseUrl}}"],
+              "path": ["run"]
+            },
+            "description": "Pairs a dataset with a checkset and runs the checks asynchronously."
+          },
+          "response": []
+        },
+        {
+          "name": "Get the status of a run.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/run/{{run_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["run", "{{run_id}}"]
+            },
+            "description": "Returns the run object with its current status."
+          },
+          "response": []
+        },
+        {
+          "name": "Download the results of a completed run.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/run/{{run_id}}/results",
+              "host": ["{{baseUrl}}"],
+              "path": ["run", "{{run_id}}", "results"]
+            },
+            "description": "Returns the evaluation results for a completed run."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Datasets and Checksets",
+      "item": [
+        {
+          "name": "Upload an evaluation dataset.",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "my-dataset", "type": "text" },
+                { "key": "file", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dataset",
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset"]
+            },
+            "description": "Uploads a JSONL / CSV dataset of evaluation rows and registers it under a name."
+          },
+          "response": []
+        },
+        {
+          "name": "Create a reusable checkset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"my-checkset\",\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/checkset",
+              "host": ["{{baseUrl}}"],
+              "path": ["checkset"]
+            },
+            "description": "Registers a named bundle of checks to pair with a dataset in a run. Also backs add_experiment."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

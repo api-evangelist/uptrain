@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: UpTrain
+providerId: uptrain
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- LLM
+- Evaluation
+- LLM Evaluation
+- Open Source
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  UpTrain does not publish documented rate limits for its managed evaluation
+  API. The open-source framework is self-hosted and effectively bounded only by
+  the rate limits of whichever LLM provider you supply a key for (OpenAI,
+  Anthropic, Azure OpenAI, Mistral, etc.) when grading. For the managed service
+  (demo.uptrain.ai), any per-account throttling is set by UpTrain and is not
+  reconciled in this artifact.
+notes: >-
+  No public rate-limit documentation exists for the managed UpTrain API. When
+  running the open-source framework, the practical ceiling is the throughput
+  and rate limits of the configured upstream LLM grading provider. Confirm
+  managed-tier limits with UpTrain on reconciliation.
+sources:
+- https://docs.uptrain.ai/
+- https://github.com/uptrain-ai/uptrain
+responseCodes:
+  throttled: 429
+limits:
+- name: Managed Evaluation Requests
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No documented per-account limit for the managed evaluate / log_and_evaluate endpoints.
+- name: Upstream LLM Grading Limits
+  scope: account
+  metric: requests
+  limit: depends on configured LLM provider
+  notes: >-
+    In the open-source framework, grading calls go to your own LLM provider key
+    and inherit that provider's rate limits.
+policies:
+- name: Provider-Bound Limits
+  description: >-
+    Open-source evaluation throughput is bound by the upstream LLM provider's
+    rate limits, not by UpTrain itself.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

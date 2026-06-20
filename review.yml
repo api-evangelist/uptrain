@@ -1,0 +1,91 @@
+aid: uptrain
+name: UpTrain
+review:
+  question: Does UpTrain expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. UpTrain's managed evaluation API is a
+    plain synchronous HTTP/JSON service rooted at {server_url}/api/public
+    (default server https://demo.uptrain.ai). There is no documented WebSocket
+    (ws:// / wss://) surface and no HTTP Server-Sent Events (SSE) streaming
+    endpoint. Asynchronous runs are handled by a poll model (POST /run, then
+    GET /run/{run_id} and GET /run/{run_id}/results), not by a streaming
+    transport, so no AsyncAPI artifact is warranted.
+findings:
+  summary: |
+    UpTrain is an open-source (Apache-2.0) LLM evaluation platform from
+    uptrain-ai. It ships a Python framework (the uptrain package, latest public
+    release v0.7.1, May 2024) plus an optional locally-hosted Docker dashboard,
+    and a managed evaluation service. The managed surface is a synchronous
+    REST/JSON API exercised by the SDK's APIClient (uptrain/framework/remote.py)
+    under {server_url}/api/public, authenticated with an uptrain-access-token
+    header. Core endpoints are POST /evaluate, POST /log_and_evaluate (which
+    also backs evaluate_experiments), POST /perform_root_cause_analysis, the
+    dataset / checkset / run lifecycle, and GET /evaluation_results/{project}.
+    No WebSocket, SSE, or other realtime streaming transport is documented.
+  maintenanceStatus: |
+    Maintenance status is documented honestly here: UpTrain is open-source and
+    NOT archived on GitHub, but public activity has slowed markedly. The last
+    significant release was v0.7.1 (May 2024) and the repository's most recent
+    push was around August 2024 (~2.3k stars, dozens of open issues). It should
+    be treated as a lightly-maintained / possibly dormant project. Managed-tier
+    commercial availability and pricing are not publicly documented and should
+    be confirmed with UpTrain before production reliance.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://demo.uptrain.ai/api/public
+      documented: true
+      note: Default managed server; the SDK derives {server_url}/api/public from the uptrain_server_url setting (default https://demo.uptrain.ai/).
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming endpoint is documented.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the UpTrain docs or SDK.
+  endpointsConfirmedRest:
+    - GET    https://demo.uptrain.ai/api/public/auth
+    - POST   https://demo.uptrain.ai/api/public/evaluate
+    - POST   https://demo.uptrain.ai/api/public/log_and_evaluate
+    - POST   https://demo.uptrain.ai/api/public/perform_root_cause_analysis
+    - POST   https://demo.uptrain.ai/api/public/dataset
+    - GET    https://demo.uptrain.ai/api/public/dataset
+    - GET    https://demo.uptrain.ai/api/public/datasets
+    - POST   https://demo.uptrain.ai/api/public/checkset
+    - GET    https://demo.uptrain.ai/api/public/checkset
+    - POST   https://demo.uptrain.ai/api/public/run
+    - GET    https://demo.uptrain.ai/api/public/run/{run_id}
+    - GET    https://demo.uptrain.ai/api/public/run/{run_id}/results
+    - GET    https://demo.uptrain.ai/api/public/runs
+    - POST   https://demo.uptrain.ai/api/public/schedule
+    - GET    https://demo.uptrain.ai/api/public/evaluation_results/{project_name}
+sources:
+  - url: https://github.com/uptrain-ai/uptrain
+    type: SourceCode
+    note: APIClient in uptrain/framework/remote.py calls {server_url}/api/public/* with the uptrain-access-token header; default server in Settings is https://demo.uptrain.ai/.
+  - url: https://docs.uptrain.ai/
+    type: Documentation
+    note: Documents the open-source framework, EvalLLM.evaluate, the managed APIClient (log_and_evaluate / evaluate), and the 20+ preconfigured checks.
+  - url: https://uptrain.ai/
+    type: Website
+    note: Marketing site; describes open-source and managed offerings. No public pricing page.
+  - url: https://pypi.org/project/uptrain/
+    type: Package
+    note: uptrain Python package; latest public release v0.7.1 (May 2024).
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No streaming protocol surface exists; UpTrain's managed API is synchronous
+    REST/JSON with a poll-based async run model. apis.yml documents four
+    sub-APIs (Evaluations, Log and Evaluate, Root Cause Analysis, Runs and
+    Datasets) over the confirmed REST endpoints. No AsyncAPI artifact was
+    created.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: UpTrain
+providerId: uptrain
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- LLM
+- Evaluation
+- LLM Evaluation
+- Open Source
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of UpTrain spend. The open-source framework carries no license
+  cost (Apache-2.0); the dominant cost when self-hosting is the upstream LLM
+  provider spend incurred by grading calls (each check issues one or more LLM
+  requests against your own OpenAI / Anthropic / Azure key). The managed
+  UpTrain service adds a usage-based charge that is not publicly documented.
+  The primary FinOps lever is controlling the number and model of grading
+  calls.
+notes: >-
+  Open-source UpTrain is free; the real, attributable cost is the upstream LLM
+  grading spend. Managed-tier pricing is undocumented and must be confirmed
+  with UpTrain. Note the project's limited public activity since mid-2024 when
+  planning multi-year FinOps commitments.
+sources:
+- https://uptrain.ai/
+- https://github.com/uptrain-ai/uptrain
+- https://docs.uptrain.ai/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: UpTrain
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: UpTrain Evaluation
+  ServiceCategory: AI and Machine Learning
+  ProviderName: UpTrain
+  PublisherName: UpTrain
+  InvoiceIssuerName: UpTrain
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: evaluations
+  description: Number of evaluation rows scored across the requested checks.
+  unit: rows
+  aggregation: sum
+  dimensions:
+  - account
+  - project
+  - check
+- name: checks_run
+  description: Total individual check executions (rows x checks).
+  unit: checks
+  aggregation: sum
+  dimensions:
+  - account
+  - project
+  - check
+- name: upstream_llm_tokens
+  description: >-
+    Tokens consumed against your own LLM provider key by UpTrain grading calls
+    when self-hosting the open-source framework.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+  - check
+principles:
+- name: Visibility
+  description: Track number of evaluation rows and checks run, and inspect upstream LLM token burn from grading calls.
+- name: Allocation
+  description: Tag evaluations by project / experiment to map evaluation cost to features and teams.
+- name: Optimization
+  description: >-
+    Limit checks to those that matter, sample rather than evaluate every
+    production row, and route grading to a cheaper-but-adequate model to cut
+    upstream LLM spend.
+- name: Accountability
+  description: Assign owners per project; review evaluation volume and grading model spend against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

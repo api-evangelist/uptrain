@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Evaluation API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "uptrain-access-token",
+        "value": "{{uptrainAccessToken}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate the UpTrain access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/auth"
+          },
+          "docs": "Checks that the supplied uptrain-access-token is valid."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Evaluation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run evaluations on a set of LLM responses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/evaluate",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"Paris is the capital of France.\",\n      \"context\": \"France is a country in Europe. Its capital is Paris.\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ]\n}"
+            }
+          },
+          "docs": "Evaluates each row of input data against the supplied list of checks and returns per-check scores and explanations."
+        },
+        {
+          "info": {
+            "name": "Log data to a project and evaluate it.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/log_and_evaluate",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"project_name\": \"my-rag-project\",\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"Paris is the capital of France.\",\n      \"context\": \"France is a country in Europe. Its capital is Paris.\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\"\n  ]\n}"
+            }
+          },
+          "docs": "Logs the data under a named project and evaluates it, persisting results to the UpTrain dashboard. Also backs evaluate_experiments."
+        },
+        {
+          "info": {
+            "name": "Download evaluation results for a project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/evaluation_results/{{project_name}}"
+          },
+          "docs": "Returns all evaluation results logged under the named project."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Root Cause Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Perform root cause analysis on failing responses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/perform_root_cause_analysis",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"project_name\": \"my-rag-project\",\n  \"data\": [\n    {\n      \"question\": \"What is the capital of France?\",\n      \"response\": \"I am not sure.\",\n      \"context\": \"France is a country in Europe.\"\n    }\n  ],\n  \"rca_template\": \"rag_with_citation\"\n}"
+            }
+          },
+          "docs": "Analyzes failing RAG / LLM responses and classifies why each response was poor."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an evaluation run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/run",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"name\": \"nightly-eval\",\n  \"dataset\": \"my-dataset\",\n  \"checkset\": \"my-checkset\"\n}"
+            }
+          },
+          "docs": "Pairs a dataset with a checkset and runs the checks asynchronously."
+        },
+        {
+          "info": {
+            "name": "Get the status of a run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/run/{{run_id}}"
+          },
+          "docs": "Returns the run object with its current status."
+        },
+        {
+          "info": {
+            "name": "Download the results of a completed run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/run/{{run_id}}/results"
+          },
+          "docs": "Returns the evaluation results for a completed run."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Datasets and Checksets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload an evaluation dataset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/dataset",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads a JSONL / CSV dataset of evaluation rows and registers it under a name."
+        },
+        {
+          "info": {
+            "name": "Create a reusable checkset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/checkset",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"name\": \"my-checkset\",\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ]\n}"
+            }
+          },
+          "docs": "Registers a named bundle of checks to pair with a dataset in a run. Also backs add_experiment."
+        }
+      ]
+    }
+  ]
+}
