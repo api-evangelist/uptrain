@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/uptrain-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: UptrainAccessToken
+  type: apiKey
+  in: header
+  parameter: uptrain-access-token
+  description: UpTrain managed-service access token. Obtained from the UpTrain dashboard and
+    supplied on every request as the uptrain-access-token header.
+  sources:
+  - openapi/uptrain-openapi.yml
