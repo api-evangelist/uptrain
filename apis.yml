@@ -92,6 +92,8 @@ apis:
     and runs that pair a dataset with a checkset - create a run (POST /run), poll its
     status (GET /run/{run_id}) and download its results (GET /run/{run_id}/results).
 common:
+- type: AgenticAccess
+  url: agentic-access/uptrain-agentic-access.yml
 - type: DomainSecurity
   url: security/uptrain-domain-security.yml
 - type: Authentication
