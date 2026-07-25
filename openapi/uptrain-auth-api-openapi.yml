@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: UpTrain Managed Evaluation Auth API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  termsOfService: https://uptrain.ai/
+  contact:
+    name: UpTrain
+    url: https://uptrain.ai/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.7.1
+servers:
+- url: https://demo.uptrain.ai/api/public
+  description: Default UpTrain managed evaluation service
+security:
+- UptrainAccessToken: []
+tags:
+- name: Auth
+paths:
+  /auth:
+    get:
+      operationId: checkAuth
+      tags:
+      - Auth
+      summary: Validate the UpTrain access token.
+      description: Checks that the supplied uptrain-access-token is valid. Called by the APIClient.check_auth() method on initialization.
+      responses:
+        '200':
+          description: Token is valid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Invalid or missing access token.
+components:
+  securitySchemes:
+    UptrainAccessToken:
+      type: apiKey
+      in: header
+      name: uptrain-access-token
+      description: UpTrain managed-service access token. Obtained from the UpTrain dashboard and supplied on every request as the uptrain-access-token header.

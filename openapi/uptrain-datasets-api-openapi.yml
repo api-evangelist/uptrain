@@ -1,0 +1,87 @@
+openapi: 3.0.1
+info:
+  title: UpTrain Managed Evaluation Auth Datasets API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  termsOfService: https://uptrain.ai/
+  contact:
+    name: UpTrain
+    url: https://uptrain.ai/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.7.1
+servers:
+- url: https://demo.uptrain.ai/api/public
+  description: Default UpTrain managed evaluation service
+security:
+- UptrainAccessToken: []
+tags:
+- name: Datasets
+paths:
+  /dataset:
+    post:
+      operationId: addDataset
+      tags:
+      - Datasets
+      summary: Upload an evaluation dataset.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name to register the dataset under.
+                file:
+                  type: string
+                  format: binary
+                  description: JSONL / CSV file of evaluation rows.
+      responses:
+        '200':
+          description: The registered dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '401':
+          description: Invalid or missing access token.
+    get:
+      operationId: getDataset
+      tags:
+      - Datasets
+      summary: Get a dataset by name.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '404':
+          description: Dataset not found.
+components:
+  schemas:
+    Dataset:
+      type: object
+      properties:
+        name:
+          type: string
+        rows:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    UptrainAccessToken:
+      type: apiKey
+      in: header
+      name: uptrain-access-token
+      description: UpTrain managed-service access token. Obtained from the UpTrain dashboard and supplied on every request as the uptrain-access-token header.

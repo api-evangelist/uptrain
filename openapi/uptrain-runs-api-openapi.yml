@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: UpTrain Managed Evaluation Auth Runs API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  termsOfService: https://uptrain.ai/
+  contact:
+    name: UpTrain
+    url: https://uptrain.ai/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.7.1
+servers:
+- url: https://demo.uptrain.ai/api/public
+  description: Default UpTrain managed evaluation service
+security:
+- UptrainAccessToken: []
+tags:
+- name: Runs
+paths:
+  /run:
+    post:
+      operationId: addRun
+      tags:
+      - Runs
+      summary: Create an evaluation run.
+      description: Creates a run that pairs a previously uploaded dataset with a checkset and executes the checks asynchronously. Returns a run identifier that can be polled for status and results.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      responses:
+        '200':
+          description: The created run.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '401':
+          description: Invalid or missing access token.
+  /run/{run_id}:
+    get:
+      operationId: getRun
+      tags:
+      - Runs
+      summary: Get the status of a run.
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The run object with its current status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '404':
+          description: Run not found.
+  /run/{run_id}/results:
+    get:
+      operationId: getRunResults
+      tags:
+      - Runs
+      summary: Download the results of a completed run.
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Evaluation results for the run.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '404':
+          description: Run not found.
+components:
+  schemas:
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
+    Run:
+      type: object
+      properties:
+        run_id:
+          type: string
+        status:
+          type: string
+          description: Run status, for example queued, running, or done.
+        created_at:
+          type: string
+          format: date-time
+    RunRequest:
+      type: object
+      required:
+      - dataset
+      - checkset
+      properties:
+        name:
+          type: string
+        dataset:
+          type: string
+          description: Name of a previously uploaded dataset.
+        checkset:
+          type: string
+          description: Name of a previously created checkset.
+  securitySchemes:
+    UptrainAccessToken:
+      type: apiKey
+      in: header
+      name: uptrain-access-token
+      description: UpTrain managed-service access token. Obtained from the UpTrain dashboard and supplied on every request as the uptrain-access-token header.

@@ -1,0 +1,92 @@
+openapi: 3.0.1
+info:
+  title: UpTrain Managed Evaluation Auth Root Cause Analysis API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  termsOfService: https://uptrain.ai/
+  contact:
+    name: UpTrain
+    url: https://uptrain.ai/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.7.1
+servers:
+- url: https://demo.uptrain.ai/api/public
+  description: Default UpTrain managed evaluation service
+security:
+- UptrainAccessToken: []
+tags:
+- name: Root Cause Analysis
+paths:
+  /perform_root_cause_analysis:
+    post:
+      operationId: performRootCauseAnalysis
+      tags:
+      - Root Cause Analysis
+      summary: Perform root cause analysis on failing responses.
+      description: Analyzes failing RAG or LLM responses and classifies why each response was poor (for example incomplete context, poor retrieval, or hallucination) to guide remediation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RootCauseAnalysisRequest'
+      responses:
+        '200':
+          description: Root cause analysis results, one object per input row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '401':
+          description: Invalid or missing access token.
+        '422':
+          description: Invalid request payload.
+components:
+  schemas:
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
+    RootCauseAnalysisRequest:
+      type: object
+      required:
+      - project_name
+      - data
+      - rca_template
+      properties:
+        project_name:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        rca_template:
+          type: string
+          description: Root cause analysis template to apply, for example rag_with_citation.
+          example: rag_with_citation
+    EvalRow:
+      type: object
+      description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
+      properties:
+        question:
+          type: string
+          description: The user query / prompt sent to the LLM.
+        response:
+          type: string
+          description: The LLM-generated response to grade.
+        context:
+          type: string
+          description: Retrieved context provided to the LLM (for RAG checks).
+        ground_truth:
+          type: string
+          description: Optional reference answer for accuracy checks.
+      additionalProperties: true
+  securitySchemes:
+    UptrainAccessToken:
+      type: apiKey
+      in: header
+      name: uptrain-access-token
+      description: UpTrain managed-service access token. Obtained from the UpTrain dashboard and supplied on every request as the uptrain-access-token header.
