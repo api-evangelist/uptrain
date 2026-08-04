@@ -1,0 +1,24 @@
+{
+  "provider": "uptrain",
+  "sources": [
+    "uptrain-auth-api-openapi.yml",
+    "uptrain-checksets-api-openapi.yml",
+    "uptrain-datasets-api-openapi.yml",
+    "uptrain-evaluation-api-openapi.yml",
+    "uptrain-root-cause-analysis-api-openapi.yml",
+    "uptrain-runs-api-openapi.yml"
+  ],
+  "outputs": [
+    "uptrain-auth-api-openapi.yml",
+    "uptrain-checksets-api-openapi.yml",
+    "uptrain-datasets-api-openapi.yml",
+    "uptrain-evaluation-api-openapi.yml",
+    "uptrain-root-cause-analysis-api-openapi.yml",
+    "uptrain-runs-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

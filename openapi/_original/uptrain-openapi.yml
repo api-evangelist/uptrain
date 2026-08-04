@@ -1,0 +1,449 @@
+openapi: 3.0.1
+info:
+  title: UpTrain Managed Evaluation API
+  description: >-
+    Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation
+    platform. The API grades supplied LLM input / output / context rows against
+    a list of named checks (context relevance, factual accuracy, response
+    completeness, conciseness, tonality, prompt injection, hallucination and
+    more), logs results to a named project for dashboard monitoring, and
+    performs root cause analysis on failures. These paths correspond to the
+    public endpoints called by the uptrain Python package's APIClient
+    (uptrain/framework/remote.py), rooted at {server_url}/api/public. The
+    default managed server is https://demo.uptrain.ai. Requests are
+    authenticated with an uptrain-access-token header.
+  termsOfService: https://uptrain.ai/
+  contact:
+    name: UpTrain
+    url: https://uptrain.ai/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: '0.7.1'
+servers:
+  - url: https://demo.uptrain.ai/api/public
+    description: Default UpTrain managed evaluation service
+security:
+  - UptrainAccessToken: []
+paths:
+  /auth:
+    get:
+      operationId: checkAuth
+      tags:
+        - Auth
+      summary: Validate the UpTrain access token.
+      description: >-
+        Checks that the supplied uptrain-access-token is valid. Called by the
+        APIClient.check_auth() method on initialization.
+      responses:
+        '200':
+          description: Token is valid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Invalid or missing access token.
+  /evaluate:
+    post:
+      operationId: evaluate
+      tags:
+        - Evaluation
+      summary: Run evaluations on a set of LLM responses.
+      description: >-
+        Evaluates each row of input data against the supplied list of checks and
+        returns the original rows enriched with per-check scores and
+        explanations. Grading LLM calls are run server-side by UpTrain.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluateRequest'
+      responses:
+        '200':
+          description: Evaluation results, one object per input row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '401':
+          description: Invalid or missing access token.
+        '422':
+          description: Invalid request payload.
+  /log_and_evaluate:
+    post:
+      operationId: logAndEvaluate
+      tags:
+        - Evaluation
+      summary: Log data to a project and evaluate it.
+      description: >-
+        Logs the supplied data under a named project and runs the requested
+        checks, persisting results so they are visible on the UpTrain dashboard
+        with real-time monitoring. This endpoint also backs the SDK's
+        evaluate_experiments method, which adds experiment column names for A/B
+        comparison of prompt or model variants.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogAndEvaluateRequest'
+      responses:
+        '200':
+          description: Evaluation results, one object per input row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '401':
+          description: Invalid or missing access token.
+        '422':
+          description: Invalid request payload.
+  /perform_root_cause_analysis:
+    post:
+      operationId: performRootCauseAnalysis
+      tags:
+        - Root Cause Analysis
+      summary: Perform root cause analysis on failing responses.
+      description: >-
+        Analyzes failing RAG or LLM responses and classifies why each response
+        was poor (for example incomplete context, poor retrieval, or
+        hallucination) to guide remediation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RootCauseAnalysisRequest'
+      responses:
+        '200':
+          description: Root cause analysis results, one object per input row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '401':
+          description: Invalid or missing access token.
+        '422':
+          description: Invalid request payload.
+  /run:
+    post:
+      operationId: addRun
+      tags:
+        - Runs
+      summary: Create an evaluation run.
+      description: >-
+        Creates a run that pairs a previously uploaded dataset with a checkset
+        and executes the checks asynchronously. Returns a run identifier that
+        can be polled for status and results.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      responses:
+        '200':
+          description: The created run.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '401':
+          description: Invalid or missing access token.
+  /run/{run_id}:
+    get:
+      operationId: getRun
+      tags:
+        - Runs
+      summary: Get the status of a run.
+      parameters:
+        - name: run_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The run object with its current status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '404':
+          description: Run not found.
+  /run/{run_id}/results:
+    get:
+      operationId: getRunResults
+      tags:
+        - Runs
+      summary: Download the results of a completed run.
+      parameters:
+        - name: run_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Evaluation results for the run.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '404':
+          description: Run not found.
+  /dataset:
+    post:
+      operationId: addDataset
+      tags:
+        - Datasets
+      summary: Upload an evaluation dataset.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name to register the dataset under.
+                file:
+                  type: string
+                  format: binary
+                  description: JSONL / CSV file of evaluation rows.
+      responses:
+        '200':
+          description: The registered dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '401':
+          description: Invalid or missing access token.
+    get:
+      operationId: getDataset
+      tags:
+        - Datasets
+      summary: Get a dataset by name.
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '404':
+          description: Dataset not found.
+  /checkset:
+    post:
+      operationId: addCheckset
+      tags:
+        - Checksets
+      summary: Create a reusable checkset.
+      description: >-
+        Registers a named bundle of checks that can be paired with a dataset in
+        a run. This endpoint also backs add_experiment in the SDK.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checkset'
+      responses:
+        '200':
+          description: The registered checkset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkset'
+        '401':
+          description: Invalid or missing access token.
+  /evaluation_results/{project_name}:
+    get:
+      operationId: downloadProjectEvalResults
+      tags:
+        - Evaluation
+      summary: Download evaluation results for a project.
+      parameters:
+        - name: project_name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All evaluation results logged under the project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResults'
+        '404':
+          description: Project not found.
+components:
+  securitySchemes:
+    UptrainAccessToken:
+      type: apiKey
+      in: header
+      name: uptrain-access-token
+      description: >-
+        UpTrain managed-service access token. Obtained from the UpTrain
+        dashboard and supplied on every request as the uptrain-access-token
+        header.
+  schemas:
+    EvalRow:
+      type: object
+      description: >-
+        A single evaluation row. The exact keys depend on the checks requested;
+        common keys are question, response and context.
+      properties:
+        question:
+          type: string
+          description: The user query / prompt sent to the LLM.
+        response:
+          type: string
+          description: The LLM-generated response to grade.
+        context:
+          type: string
+          description: Retrieved context provided to the LLM (for RAG checks).
+        ground_truth:
+          type: string
+          description: Optional reference answer for accuracy checks.
+      additionalProperties: true
+    EvaluateRequest:
+      type: object
+      required:
+        - data
+        - checks
+      properties:
+        data:
+          type: array
+          description: List of rows to evaluate.
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        checks:
+          type: array
+          description: >-
+            List of checks to run. Each item is a preconfigured check name (for
+            example context_relevance, factual_accuracy, response_completeness,
+            response_conciseness, response_relevance, valid_response, tonality,
+            prompt_injection, jailbreak_detection) or a check object.
+          items:
+            type: string
+          example:
+            - context_relevance
+            - factual_accuracy
+            - response_completeness
+        metadata:
+          type: object
+          description: Optional metadata to attach to the evaluation.
+          additionalProperties: true
+    LogAndEvaluateRequest:
+      type: object
+      required:
+        - project_name
+        - data
+        - checks
+      properties:
+        project_name:
+          type: string
+          description: Project to log the data and results under.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        checks:
+          type: array
+          items:
+            type: string
+          example:
+            - context_relevance
+            - factual_accuracy
+        metadata:
+          type: object
+          additionalProperties: true
+    RootCauseAnalysisRequest:
+      type: object
+      required:
+        - project_name
+        - data
+        - rca_template
+      properties:
+        project_name:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        rca_template:
+          type: string
+          description: >-
+            Root cause analysis template to apply, for example
+            rag_with_citation.
+          example: rag_with_citation
+    EvaluationResults:
+      type: array
+      description: >-
+        The input rows echoed back, each enriched with score_<check> and
+        explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
+    RunRequest:
+      type: object
+      required:
+        - dataset
+        - checkset
+      properties:
+        name:
+          type: string
+        dataset:
+          type: string
+          description: Name of a previously uploaded dataset.
+        checkset:
+          type: string
+          description: Name of a previously created checkset.
+    Run:
+      type: object
+      properties:
+        run_id:
+          type: string
+        status:
+          type: string
+          description: Run status, for example queued, running, or done.
+        created_at:
+          type: string
+          format: date-time
+    Dataset:
+      type: object
+      properties:
+        name:
+          type: string
+        rows:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    Checkset:
+      type: object
+      required:
+        - name
+        - checks
+      properties:
+        name:
+          type: string
+        checks:
+          type: array
+          items:
+            type: string
