@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Evaluation Auth API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "uptrain-access-token",
+      "value": "{{uptrain-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate the UpTrain access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/auth"
+          },
+          "docs": "Checks that the supplied uptrain-access-token is valid. Called by the APIClient.check_auth() method on initialization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

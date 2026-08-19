@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Auth Evaluation API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "uptrain-access-token",
+      "value": "{{uptrain-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Evaluation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run evaluations on a set of LLM responses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/evaluate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Evaluates each row of input data against the supplied list of checks and returns the original rows enriched with per-check scores and explanations. Grading LLM calls are run server-side by UpTrain."
+        },
+        {
+          "info": {
+            "name": "Log data to a project and evaluate it.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/log_and_evaluate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Logs the supplied data under a named project and runs the requested checks, persisting results so they are visible on the UpTrain dashboard with real-time monitoring. This endpoint also backs the SDK's evaluate_experiments method, which adds experiment column names for A/B comparison of prompt or model variants."
+        },
+        {
+          "info": {
+            "name": "Download evaluation results for a project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/evaluation_results/:project_name",
+            "params": [
+              {
+                "name": "project_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download evaluation results for a project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

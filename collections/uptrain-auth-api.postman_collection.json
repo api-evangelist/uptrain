@@ -1,0 +1,166 @@
+{
+  "item": [
+    {
+      "id": "04f4b808-7e56-48c7-b48f-b50b01d61ac3",
+      "name": "Auth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bd0caf91-02f3-4b06-bbf6-5dae7cb1fec7",
+          "name": "Validate the UpTrain access token.",
+          "request": {
+            "name": "Validate the UpTrain access token.",
+            "description": {
+              "content": "Checks that the supplied uptrain-access-token is valid. Called by the APIClient.check_auth() method on initialization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "342e6d25-1914-468b-896f-ad6b128c4966",
+              "name": "Token is valid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f7e4b56-5e45-430c-93db-b30e54defcf8",
+              "name": "Invalid or missing access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://demo.uptrain.ai/api/public",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "uptrain-access-token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6cd3bce0-5439-4361-be6f-a2f13e01378d",
+    "name": "UpTrain Managed Evaluation Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.\n\nContact Support:\n Name: UpTrain",
+      "type": "text/plain"
+    }
+  }
+}

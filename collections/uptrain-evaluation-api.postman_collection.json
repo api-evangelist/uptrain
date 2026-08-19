@@ -1,0 +1,576 @@
+{
+  "item": [
+    {
+      "id": "f8052c0d-3d7f-40e4-90c1-a86515f035df",
+      "name": "Evaluation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1afbeafb-090c-4932-bc19-f9fb10dda78b",
+          "name": "Run evaluations on a set of LLM responses.",
+          "request": {
+            "name": "Run evaluations on a set of LLM responses.",
+            "description": {
+              "content": "Evaluates each row of input data against the supplied list of checks and returns the original rows enriched with per-check scores and explanations. Grading LLM calls are run server-side by UpTrain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "evaluate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": 7400.606271941241,\n      \"key_1\": true,\n      \"key_2\": 3218\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"checks\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"key_0\": 9069.234402872666\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "39410df1-f5a3-477e-9408-216aab0fd78e",
+              "name": "Evaluation results, one object per input row.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": false,\n      \"key_1\": 5231.642676796138\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ],\n  \"metadata\": {\n    \"key_0\": 3755.480431403153\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key_0\": 6332.678427083856\n  },\n  {\n    \"key_0\": 9758.474499776232,\n    \"key_1\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc330872-8a5f-4d79-a3ae-102a3e7f8737",
+              "name": "Invalid or missing access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": false,\n      \"key_1\": 5231.642676796138\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ],\n  \"metadata\": {\n    \"key_0\": 3755.480431403153\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a1e56943-17c2-4363-85f1-73824b862331",
+              "name": "Invalid request payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": false,\n      \"key_1\": 5231.642676796138\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\",\n    \"response_completeness\"\n  ],\n  \"metadata\": {\n    \"key_0\": 3755.480431403153\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47f6c9be-2c11-4d2f-8f1d-2e1dcc7f4a44",
+          "name": "Log data to a project and evaluate it.",
+          "request": {
+            "name": "Log data to a project and evaluate it.",
+            "description": {
+              "content": "Logs the supplied data under a named project and runs the requested checks, persisting results so they are visible on the UpTrain dashboard with real-time monitoring. This endpoint also backs the SDK's evaluate_experiments method, which adds experiment column names for A/B comparison of prompt or model variants.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "log_and_evaluate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"checks\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6837,\n    \"key_3\": 5140.332083962758\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ce4268ab-7e94-455d-afa1-298410470043",
+              "name": "Evaluation results, one object per input row.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "log_and_evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\"\n  ],\n  \"metadata\": {\n    \"key_0\": 4323.63037163248,\n    \"key_1\": 1034.067169850983\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key_0\": 6535.284998094621,\n    \"key_1\": false,\n    \"key_2\": 6091.16300357217,\n    \"key_3\": false,\n    \"key_4\": \"string\"\n  },\n  {\n    \"key_0\": true,\n    \"key_1\": 3496.3976065945844,\n    \"key_2\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb641341-d58d-47f4-a949-6e55a257b251",
+              "name": "Invalid or missing access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "log_and_evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\"\n  ],\n  \"metadata\": {\n    \"key_0\": 4323.63037163248,\n    \"key_1\": 1034.067169850983\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "061ef1e4-33e1-46cd-9c53-c06667947d75",
+              "name": "Invalid request payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "log_and_evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"checks\": [\n    \"context_relevance\",\n    \"factual_accuracy\"\n  ],\n  \"metadata\": {\n    \"key_0\": 4323.63037163248,\n    \"key_1\": 1034.067169850983\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db6c981d-e847-4dbe-9edd-13d0e53aa2f6",
+          "name": "Download evaluation results for a project.",
+          "request": {
+            "name": "Download evaluation results for a project.",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation_results",
+                ":project_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "408ab9aa-1948-41db-9430-d8d36e119cf2",
+              "name": "All evaluation results logged under the project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation_results",
+                    ":project_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key_0\": 6535.284998094621,\n    \"key_1\": false,\n    \"key_2\": 6091.16300357217,\n    \"key_3\": false,\n    \"key_4\": \"string\"\n  },\n  {\n    \"key_0\": true,\n    \"key_1\": 3496.3976065945844,\n    \"key_2\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fba966f-d75d-4abd-841c-d8be780e2bed",
+              "name": "Project not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation_results",
+                    ":project_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://demo.uptrain.ai/api/public",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "uptrain-access-token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa32507e-fd5e-495f-8230-c192e5c40656",
+    "name": "UpTrain Managed Auth Evaluation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.\n\nContact Support:\n Name: UpTrain",
+      "type": "text/plain"
+    }
+  }
+}

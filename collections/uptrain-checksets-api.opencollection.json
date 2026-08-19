@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Evaluation Auth Checksets API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "uptrain-access-token",
+      "value": "{{uptrain-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Checksets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a reusable checkset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/checkset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a named bundle of checks that can be paired with a dataset in a run. This endpoint also backs add_experiment in the SDK."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

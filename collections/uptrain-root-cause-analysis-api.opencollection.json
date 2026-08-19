@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Evaluation Auth Root Cause Analysis API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "uptrain-access-token",
+      "value": "{{uptrain-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Root Cause Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Perform root cause analysis on failing responses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/perform_root_cause_analysis",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Analyzes failing RAG or LLM responses and classifies why each response was poor (for example incomplete context, poor retrieval, or hallucination) to guide remediation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

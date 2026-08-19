@@ -1,0 +1,242 @@
+{
+  "item": [
+    {
+      "id": "7bbbd2ae-dd83-49cf-b415-a9d2c027868e",
+      "name": "Root Cause Analysis",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8a68da7f-0a38-4818-bfbc-1f0e4b18c93d",
+          "name": "Perform root cause analysis on failing responses.",
+          "request": {
+            "name": "Perform root cause analysis on failing responses.",
+            "description": {
+              "content": "Analyzes failing RAG or LLM responses and classifies why each response was poor (for example incomplete context, poor retrieval, or hallucination) to guide remediation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "perform_root_cause_analysis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": 5205\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\",\n      \"key_0\": \"string\",\n      \"key_1\": true\n    }\n  ],\n  \"rca_template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3a309e5f-a05f-4a70-a561-40b29cf6d626",
+              "name": "Root cause analysis results, one object per input row.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "perform_root_cause_analysis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"rca_template\": \"rag_with_citation\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key_0\": \"string\"\n  },\n  {\n    \"key_0\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a36692e2-bcfe-4e4c-bb0c-c67e28fa89a7",
+              "name": "Invalid or missing access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "perform_root_cause_analysis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"rca_template\": \"rag_with_citation\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d34c2184-4886-4878-866d-8980af072043",
+              "name": "Invalid request payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "perform_root_cause_analysis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "uptrain-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project_name\": \"<string>\",\n  \"data\": [\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    },\n    {\n      \"question\": \"<string>\",\n      \"response\": \"<string>\",\n      \"context\": \"<string>\",\n      \"ground_truth\": \"<string>\"\n    }\n  ],\n  \"rca_template\": \"rag_with_citation\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://demo.uptrain.ai/api/public",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "uptrain-access-token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c1668107-7827-4efb-912e-a5ab6b49eeda",
+    "name": "UpTrain Managed Evaluation Auth Root Cause Analysis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.\n\nContact Support:\n Name: UpTrain",
+      "type": "text/plain"
+    }
+  }
+}

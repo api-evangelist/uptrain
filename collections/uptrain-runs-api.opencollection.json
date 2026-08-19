@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UpTrain Managed Evaluation Auth Runs API",
+    "version": "0.7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "uptrain-access-token",
+      "value": "{{uptrain-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an evaluation run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://demo.uptrain.ai/api/public/run",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a run that pairs a previously uploaded dataset with a checkset and executes the checks asynchronously. Returns a run identifier that can be polled for status and results."
+        },
+        {
+          "info": {
+            "name": "Get the status of a run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/run/:run_id",
+            "params": [
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status of a run."
+        },
+        {
+          "info": {
+            "name": "Download the results of a completed run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://demo.uptrain.ai/api/public/run/:run_id/results",
+            "params": [
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download the results of a completed run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
