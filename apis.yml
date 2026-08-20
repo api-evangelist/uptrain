@@ -22,6 +22,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/uptrain.png
 tags:
+- Artificial Intelligence
+- LLM
+- Evaluation
+- LLM Evaluation
+- Observability
+- Open-Source
+tags_raw:
 - AI
 - LLM
 - Evaluation
@@ -38,6 +45,8 @@ apis:
   humanURL: https://docs.uptrain.ai/
   baseURL: https://demo.uptrain.ai/api/public
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
