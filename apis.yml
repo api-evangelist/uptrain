@@ -7,6 +7,18 @@ description: UpTrain is an open-source (Apache-2.0) unified platform to evaluate
   evaluation API that grades responses against 20+ preconfigured checks - context
   relevance, factual accuracy, response completeness, hallucination, tonality, prompt
   injection and more - and performs root cause analysis on failure cases.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
