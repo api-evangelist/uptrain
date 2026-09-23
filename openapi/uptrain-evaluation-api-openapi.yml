@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: UpTrain Managed Auth Evaluation API
-  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  title: UpTrain Managed Evaluation API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform.
   termsOfService: https://uptrain.ai/
   contact:
     name: UpTrain
@@ -23,7 +23,7 @@ paths:
       operationId: evaluate
       tags:
       - Evaluation
-      summary: Run evaluations on a set of LLM responses.
+      summary: Run evaluations on a set of LLM responses
       description: Evaluates each row of input data against the supplied list of checks and returns the original rows enriched with per-check scores and explanations. Grading LLM calls are run server-side by UpTrain.
       requestBody:
         required: true
@@ -47,7 +47,7 @@ paths:
       operationId: logAndEvaluate
       tags:
       - Evaluation
-      summary: Log data to a project and evaluate it.
+      summary: Log data to a project and evaluate it
       description: Logs the supplied data under a named project and runs the requested checks, persisting results so they are visible on the UpTrain dashboard with real-time monitoring. This endpoint also backs the SDK's evaluate_experiments method, which adds experiment column names for A/B comparison of prompt or model variants.
       requestBody:
         required: true
@@ -71,7 +71,7 @@ paths:
       operationId: downloadProjectEvalResults
       tags:
       - Evaluation
-      summary: Download evaluation results for a project.
+      summary: Download evaluation results for a project
       parameters:
       - name: project_name
         in: path
@@ -89,36 +89,6 @@ paths:
           description: Project not found.
 components:
   schemas:
-    EvaluateRequest:
-      type: object
-      required:
-      - data
-      - checks
-      properties:
-        data:
-          type: array
-          description: List of rows to evaluate.
-          items:
-            $ref: '#/components/schemas/EvalRow'
-        checks:
-          type: array
-          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
-          items:
-            type: string
-          example:
-          - context_relevance
-          - factual_accuracy
-          - response_completeness
-        metadata:
-          type: object
-          description: Optional metadata to attach to the evaluation.
-          additionalProperties: true
-    EvaluationResults:
-      type: array
-      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
-      items:
-        type: object
-        additionalProperties: true
     LogAndEvaluateRequest:
       type: object
       required:
@@ -142,6 +112,36 @@ components:
           - factual_accuracy
         metadata:
           type: object
+          additionalProperties: true
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
+    EvaluateRequest:
+      type: object
+      required:
+      - data
+      - checks
+      properties:
+        data:
+          type: array
+          description: List of rows to evaluate.
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        checks:
+          type: array
+          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
+          items:
+            type: string
+          example:
+          - context_relevance
+          - factual_accuracy
+          - response_completeness
+        metadata:
+          type: object
+          description: Optional metadata to attach to the evaluation.
           additionalProperties: true
     EvalRow:
       type: object

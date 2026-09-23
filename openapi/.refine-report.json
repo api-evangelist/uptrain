@@ -1,12 +1,7 @@
 {
   "provider": "uptrain",
   "sources": [
-    "uptrain-auth-api-openapi.yml",
-    "uptrain-checksets-api-openapi.yml",
-    "uptrain-datasets-api-openapi.yml",
-    "uptrain-evaluation-api-openapi.yml",
-    "uptrain-root-cause-analysis-api-openapi.yml",
-    "uptrain-runs-api-openapi.yml"
+    "_original/uptrain-openapi.yml"
   ],
   "outputs": [
     "uptrain-auth-api-openapi.yml",
@@ -19,6 +14,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "uptrain-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "uptrain-openapi.yml: declared missing tag: Auth",
+    "uptrain-openapi.yml: declared missing tag: Checksets",
+    "uptrain-openapi.yml: declared missing tag: Datasets",
+    "uptrain-openapi.yml: declared missing tag: Evaluation",
+    "uptrain-openapi.yml: declared missing tag: Root Cause Analysis",
+    "uptrain-openapi.yml: declared missing tag: Runs",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "uptrain-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "uptrain-checksets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "uptrain-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "uptrain-evaluation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "uptrain-root-cause-analysis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "uptrain-runs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

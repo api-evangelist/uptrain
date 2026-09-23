@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: UpTrain Managed Evaluation Auth Datasets API
-  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform. The API grades supplied LLM input / output / context rows against a list of named checks (context relevance, factual accuracy, response completeness, conciseness, tonality, prompt injection, hallucination and more), logs results to a named project for dashboard monitoring, and performs root cause analysis on failures. These paths correspond to the public endpoints called by the uptrain Python package's APIClient (uptrain/framework/remote.py), rooted at {server_url}/api/public. The default managed server is https://demo.uptrain.ai. Requests are authenticated with an uptrain-access-token header.
+  title: UpTrain Managed Evaluation Datasets API
+  description: Managed HTTP API for UpTrain, the open-source (Apache-2.0) LLM evaluation platform.
   termsOfService: https://uptrain.ai/
   contact:
     name: UpTrain
@@ -23,7 +23,7 @@ paths:
       operationId: addDataset
       tags:
       - Datasets
-      summary: Upload an evaluation dataset.
+      summary: Upload an evaluation dataset
       requestBody:
         required: true
         content:
@@ -51,7 +51,7 @@ paths:
       operationId: getDataset
       tags:
       - Datasets
-      summary: Get a dataset by name.
+      summary: Get a dataset by name
       parameters:
       - name: name
         in: query
