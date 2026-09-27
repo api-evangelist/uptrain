@@ -50,23 +50,6 @@ components:
       items:
         type: object
         additionalProperties: true
-    RootCauseAnalysisRequest:
-      type: object
-      required:
-      - project_name
-      - data
-      - rca_template
-      properties:
-        project_name:
-          type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EvalRow'
-        rca_template:
-          type: string
-          description: Root cause analysis template to apply, for example rag_with_citation.
-          example: rag_with_citation
     EvalRow:
       type: object
       description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
@@ -84,6 +67,23 @@ components:
           type: string
           description: Optional reference answer for accuracy checks.
       additionalProperties: true
+    RootCauseAnalysisRequest:
+      type: object
+      required:
+      - project_name
+      - data
+      - rca_template
+      properties:
+        project_name:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        rca_template:
+          type: string
+          description: Root cause analysis template to apply, for example rag_with_citation.
+          example: rag_with_citation
   securitySchemes:
     UptrainAccessToken:
       type: apiKey

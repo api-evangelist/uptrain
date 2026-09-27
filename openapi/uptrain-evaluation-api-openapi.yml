@@ -89,36 +89,6 @@ paths:
           description: Project not found.
 components:
   schemas:
-    LogAndEvaluateRequest:
-      type: object
-      required:
-      - project_name
-      - data
-      - checks
-      properties:
-        project_name:
-          type: string
-          description: Project to log the data and results under.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EvalRow'
-        checks:
-          type: array
-          items:
-            type: string
-          example:
-          - context_relevance
-          - factual_accuracy
-        metadata:
-          type: object
-          additionalProperties: true
-    EvaluationResults:
-      type: array
-      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
-      items:
-        type: object
-        additionalProperties: true
     EvaluateRequest:
       type: object
       required:
@@ -143,6 +113,12 @@ components:
           type: object
           description: Optional metadata to attach to the evaluation.
           additionalProperties: true
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
     EvalRow:
       type: object
       description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
@@ -160,6 +136,30 @@ components:
           type: string
           description: Optional reference answer for accuracy checks.
       additionalProperties: true
+    LogAndEvaluateRequest:
+      type: object
+      required:
+      - project_name
+      - data
+      - checks
+      properties:
+        project_name:
+          type: string
+          description: Project to log the data and results under.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        checks:
+          type: array
+          items:
+            type: string
+          example:
+          - context_relevance
+          - factual_accuracy
+        metadata:
+          type: object
+          additionalProperties: true
   securitySchemes:
     UptrainAccessToken:
       type: apiKey
