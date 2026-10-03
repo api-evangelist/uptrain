@@ -89,53 +89,6 @@ paths:
           description: Project not found.
 components:
   schemas:
-    EvaluateRequest:
-      type: object
-      required:
-      - data
-      - checks
-      properties:
-        data:
-          type: array
-          description: List of rows to evaluate.
-          items:
-            $ref: '#/components/schemas/EvalRow'
-        checks:
-          type: array
-          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
-          items:
-            type: string
-          example:
-          - context_relevance
-          - factual_accuracy
-          - response_completeness
-        metadata:
-          type: object
-          description: Optional metadata to attach to the evaluation.
-          additionalProperties: true
-    EvaluationResults:
-      type: array
-      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
-      items:
-        type: object
-        additionalProperties: true
-    EvalRow:
-      type: object
-      description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
-      properties:
-        question:
-          type: string
-          description: The user query / prompt sent to the LLM.
-        response:
-          type: string
-          description: The LLM-generated response to grade.
-        context:
-          type: string
-          description: Retrieved context provided to the LLM (for RAG checks).
-        ground_truth:
-          type: string
-          description: Optional reference answer for accuracy checks.
-      additionalProperties: true
     LogAndEvaluateRequest:
       type: object
       required:
@@ -159,6 +112,53 @@ components:
           - factual_accuracy
         metadata:
           type: object
+          additionalProperties: true
+    EvalRow:
+      type: object
+      description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
+      properties:
+        question:
+          type: string
+          description: The user query / prompt sent to the LLM.
+        response:
+          type: string
+          description: The LLM-generated response to grade.
+        context:
+          type: string
+          description: Retrieved context provided to the LLM (for RAG checks).
+        ground_truth:
+          type: string
+          description: Optional reference answer for accuracy checks.
+      additionalProperties: true
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
+    EvaluateRequest:
+      type: object
+      required:
+      - data
+      - checks
+      properties:
+        data:
+          type: array
+          description: List of rows to evaluate.
+          items:
+            $ref: '#/components/schemas/EvalRow'
+        checks:
+          type: array
+          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
+          items:
+            type: string
+          example:
+          - context_relevance
+          - factual_accuracy
+          - response_completeness
+        metadata:
+          type: object
+          description: Optional metadata to attach to the evaluation.
           additionalProperties: true
   securitySchemes:
     UptrainAccessToken:
