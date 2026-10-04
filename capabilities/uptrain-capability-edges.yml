@@ -1,0 +1,34 @@
+slug: uptrain
+provider: UpTrain
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Evaluation
+  spec_file: uptrain-evaluation-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.78
+  evidence: POST /evaluate  evaluate  Run evaluations on a set of LLM responses
+  reason: Operations grade LLM responses against preconfigured checks and return evaluation results —
+    model evaluation/responsible-AI work within AI/ML lifecycle management (BC-610.60).
+- tag: Root Cause Analysis
+  spec_file: uptrain-root-cause-analysis-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /perform_root_cause_analysis  performRootCauseAnalysis  Perform root cause analysis on
+    failing responses
+  reason: Diagnoses why LLM responses fail evaluation checks; this is AI/ML model quality analysis, mapped
+    to Artificial Intelligence Management rather than any generic quality or incident capability.

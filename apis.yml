@@ -164,6 +164,9 @@ apis:
   - type: Documentation
     url: https://docs.uptrain.ai/predefined-evaluations/overview
 common:
+- type: CapabilityMap
+  url: capabilities/uptrain-capability-edges.yml
+  name: UpTrain Business Capability Map
 - type: AgenticAccess
   url: agentic-access/uptrain-agentic-access.yml
 - type: DomainSecurity
