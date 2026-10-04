@@ -44,6 +44,12 @@ paths:
           description: Invalid request payload.
 components:
   schemas:
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
     EvalRow:
       type: object
       description: A single evaluation row. The exact keys depend on the checks requested; common keys are question, response and context.
@@ -61,12 +67,6 @@ components:
           type: string
           description: Optional reference answer for accuracy checks.
       additionalProperties: true
-    EvaluationResults:
-      type: array
-      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
-      items:
-        type: object
-        additionalProperties: true
     RootCauseAnalysisRequest:
       type: object
       required:

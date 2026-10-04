@@ -84,6 +84,12 @@ paths:
           description: Run not found.
 components:
   schemas:
+    EvaluationResults:
+      type: array
+      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
+      items:
+        type: object
+        additionalProperties: true
     RunRequest:
       type: object
       required:
@@ -98,12 +104,6 @@ components:
         checkset:
           type: string
           description: Name of a previously created checkset.
-    EvaluationResults:
-      type: array
-      description: The input rows echoed back, each enriched with score_<check> and explanation_<check> fields for every requested check.
-      items:
-        type: object
-        additionalProperties: true
     Run:
       type: object
       properties:
