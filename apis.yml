@@ -50,7 +50,7 @@ tags_raw:
 - Open Source
 - Open-Source
 created: '2026-06-20'
-modified: '2026-06-20'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: uptrain:uptrain-auth-api
@@ -164,6 +164,8 @@ apis:
   - type: Documentation
     url: https://docs.uptrain.ai/predefined-evaluations/overview
 common:
+- url: https://uptrain.ai/blog
+  type: Blog
 - type: CapabilityMap
   url: capabilities/uptrain-capability-edges.yml
   name: UpTrain Business Capability Map
