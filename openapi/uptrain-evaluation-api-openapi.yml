@@ -89,29 +89,29 @@ paths:
           description: Project not found.
 components:
   schemas:
-    EvaluateRequest:
+    LogAndEvaluateRequest:
       type: object
       required:
+      - project_name
       - data
       - checks
       properties:
+        project_name:
+          type: string
+          description: Project to log the data and results under.
         data:
           type: array
-          description: List of rows to evaluate.
           items:
             $ref: '#/components/schemas/EvalRow'
         checks:
           type: array
-          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
           items:
             type: string
           example:
           - context_relevance
           - factual_accuracy
-          - response_completeness
         metadata:
           type: object
-          description: Optional metadata to attach to the evaluation.
           additionalProperties: true
     EvaluationResults:
       type: array
@@ -136,29 +136,29 @@ components:
           type: string
           description: Optional reference answer for accuracy checks.
       additionalProperties: true
-    LogAndEvaluateRequest:
+    EvaluateRequest:
       type: object
       required:
-      - project_name
       - data
       - checks
       properties:
-        project_name:
-          type: string
-          description: Project to log the data and results under.
         data:
           type: array
+          description: List of rows to evaluate.
           items:
             $ref: '#/components/schemas/EvalRow'
         checks:
           type: array
+          description: List of checks to run. Each item is a preconfigured check name (for example context_relevance, factual_accuracy, response_completeness, response_conciseness, response_relevance, valid_response, tonality, prompt_injection, jailbreak_detection) or a check object.
           items:
             type: string
           example:
           - context_relevance
           - factual_accuracy
+          - response_completeness
         metadata:
           type: object
+          description: Optional metadata to attach to the evaluation.
           additionalProperties: true
   securitySchemes:
     UptrainAccessToken:
