@@ -1,4 +1,4 @@
-# UpTrain (uptrain)
+# UpTrain
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,116 +66,126 @@
 
 UpTrain is an open-source (Apache-2.0) unified platform to evaluate and improve generative AI and LLM applications. It ships a Python framework plus a managed evaluation API that grades responses against 20+ preconfigured checks - context relevance, factual accuracy, response completeness, hallucination, tonality, prompt injection and more - and performs root cause analysis on failure cases.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/uptrain/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/uptrain/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · LLM · Evaluation · LLM Evaluation · Observability · Open Source
 
-## Tags
+## UpTrain on APIs.io
 
-- AI
-- LLM
-- Evaluation
-- LLM Evaluation
-- Observability
-- Open Source
+Everything profiled for UpTrain is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/uptrain/](https://apis.io/providers/uptrain/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [UpTrain Auth API](https://apis.io/apis/uptrain/uptrain-auth-api/) — The Auth API from UpTrain — 1 operation(s) for auth.
+- [UpTrain Checksets API](https://apis.io/apis/uptrain/uptrain-checksets-api/) — The Checksets API from UpTrain — 1 operation(s) for checksets.
+- [UpTrain Datasets API](https://apis.io/apis/uptrain/uptrain-datasets-api/) — The Datasets API from UpTrain — 1 operation(s) for datasets.
+- [UpTrain Evaluation API](https://apis.io/apis/uptrain/uptrain-evaluation-api/) — The Evaluation API from UpTrain — 3 operation(s) for evaluation.
+- [UpTrain Root Cause Analysis API](https://apis.io/apis/uptrain/uptrain-root-cause-analysis-api/) — The Root Cause Analysis API from UpTrain — 1 operation(s) for root cause analysis.
+- [UpTrain Runs API](https://apis.io/apis/uptrain/uptrain-runs-api/) — The Runs API from UpTrain — 3 operation(s) for runs.
 
-## APIs
+### Published properties
 
-### UpTrain Evaluations API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Runs evaluations (POST /evaluate) on supplied LLM input/output/context rows against a list of named checks such as context_relevance, factual_accuracy, response_completeness and response_conciseness, returning per-row grades and explanations. Authenticated with an uptrain-access-token header.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.uptrain.ai/](https://docs.uptrain.ai/)
-- **Base URL:** `https://demo.uptrain.ai/api/public`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Uptrain Agentic Access](https://apis.io/agentic-access/uptrain/uptrain-agentic-access/)
 
-- Evaluation
-- LLM
-- Checks
+#### Collections (7)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://docs.uptrain.ai/getting-started/introduction)
-- [API Reference](https://docs.uptrain.ai/predefined-evaluations/overview)
-- [OpenAPI](openapi/uptrain-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/uptrain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/uptrain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [UpTrain Managed Evaluation API](https://apis.io/collections/uptrain/open-uptrain/)
+- [UpTrain Managed Evaluation Auth API](https://apis.io/collections/uptrain/open-uptrain-auth-api/)
+- [UpTrain Managed Evaluation Auth Checksets API](https://apis.io/collections/uptrain/open-uptrain-checksets-api/)
+- [UpTrain Managed Evaluation Auth Datasets API](https://apis.io/collections/uptrain/open-uptrain-datasets-api/)
+- [UpTrain Managed Auth Evaluation API](https://apis.io/collections/uptrain/open-uptrain-evaluation-api/)
+- [UpTrain Managed Evaluation Auth Root Cause Analysis API](https://apis.io/collections/uptrain/open-uptrain-root-cause-analysis-api/)
+- [UpTrain Managed Evaluation Auth Runs API](https://apis.io/collections/uptrain/open-uptrain-runs-api/)
 
-### UpTrain Log and Evaluate API
+#### Security (2)
 
-Logs evaluation data under a named project and evaluates it in one call (POST /log_and_evaluate), persisting results so they appear on the managed UpTrain dashboard with real-time monitoring. The same endpoint backs evaluate_experiments for A/B comparison of prompt or model variants.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.uptrain.ai/](https://docs.uptrain.ai/)
-- **Base URL:** `https://demo.uptrain.ai/api/public`
+- [Uptrain Authentication](https://apis.io/security/uptrain/uptrain-authentication/)
+- [Uptrain Domain Security](https://apis.io/security/uptrain/uptrain-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Logging
-- Evaluation
-- Projects
+Published plans, tiers and prices.
 
-#### Properties
+- [Uptrain Plans Pricing](https://apis.io/plans/uptrain/uptrain-plans-pricing/)
 
-- [Documentation](https://docs.uptrain.ai/getting-started/quickstart)
-- [OpenAPI](openapi/uptrain-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/uptrain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/uptrain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### UpTrain Root Cause Analysis API
+Published request limits.
 
-Performs root cause analysis (POST /perform_root_cause_analysis) on failing RAG or LLM responses, classifying why a response was poor - e.g. incomplete context, poor retrieval, or hallucination - to guide remediation.
+- [Uptrain Rate Limits](https://apis.io/rate-limits/uptrain/uptrain-rate-limits/)
 
-- **Human URL:** [https://docs.uptrain.ai/](https://docs.uptrain.ai/)
-- **Base URL:** `https://demo.uptrain.ai/api/public`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Root Cause Analysis
-- RAG
-- Diagnostics
+- [Uptrain Finops](https://apis.io/finops/uptrain/uptrain-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://docs.uptrain.ai/predefined-evaluations/overview)
-- [OpenAPI](openapi/uptrain-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/uptrain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/uptrain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### UpTrain Runs and Datasets API
-
-Manages evaluation datasets, checksets (reusable bundles of checks), and runs that pair a dataset with a checkset - create a run (POST /run), poll its status (GET /run/{run_id}) and download its results (GET /run/{run_id}/results).
-
-- **Human URL:** [https://docs.uptrain.ai/](https://docs.uptrain.ai/)
-- **Base URL:** `https://demo.uptrain.ai/api/public`
-
-#### Tags
-
-- Runs
-- Datasets
-- Checksets
-
-#### Properties
-
-- [Documentation](https://docs.uptrain.ai/getting-started/quickstart)
-- [OpenAPI](openapi/uptrain-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/uptrain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/uptrain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/uptrain-ai)
-- [LinkedIn](https://www.linkedin.com/company/uptrain-ai)
 - [Website](https://uptrain.ai/)
 - [Documentation](https://docs.uptrain.ai/)
-- [Plans](plans/uptrain-plans-pricing.yml)
-- [Rate Limits](rate-limits/uptrain-rate-limits.yml)
-- [Fin Ops](finops/uptrain-finops.yml)
+- [Blog](https://uptrain.ai/blog)
+- [GitHub](https://github.com/uptrain-ai)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 25.7** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 48.4 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/uptrain/](https://apis.io/providers/uptrain/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for UpTrain: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/uptrain/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
